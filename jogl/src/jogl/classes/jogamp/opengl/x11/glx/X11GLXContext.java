@@ -68,6 +68,9 @@ import com.jogamp.nativewindow.x11.X11GraphicsDevice;
 import com.jogamp.opengl.GLExtensions;
 
 public class X11GLXContext extends GLContextImpl {
+
+  private static final boolean ENABLE_GL3_TO_GL2 = true;
+
   private static final Map<String, String> extensionNameMap;
   private GLXExt _glXExt;
   // Table that holds the addresses of the native C-language entry points for
@@ -432,7 +435,7 @@ public class X11GLXContext extends GLContextImpl {
             }
         }
     } else {
-        if( glp.isGL3() && createContextARBTried ) {
+        if( !ENABLE_GL3_TO_GL2 && glp.isGL3() && createContextARBTried ) {
             // We shall not allow context creation >= GL3 w/ non ARB methods if ARB is used,
             // otherwise context of similar profile but different creation method may not be share-able.
             glXReleaseContext(display);
